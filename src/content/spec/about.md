@@ -1,9 +1,47 @@
-# About
-This is the demo site for [Fuwari](https://github.com/saicaca/fuwari).
+<style>
+.hover-hash {
+  position: relative;
+  cursor: pointer;
+  scroll-margin-top: 40vh;
+}
 
-::github{repo="saicaca/fuwari"}
+.hover-hash::before {
+  content: "#";
+  opacity: 0;
+  margin-right: 8px;
+  transition: opacity 0.3s ease;
+  color: #ff0044; / color del símbolo /
+}
 
-> ### Sources of images used in this site
-> - [Unsplash](https://unsplash.com/)
-> - [星と少女](https://www.pixiv.net/artworks/108916539) by [Stella](https://www.pixiv.net/users/93273965)
-> - [Rabbit - v1.4 Showcase](https://civitai.com/posts/586908) by [Rabbit_YourMajesty](https://civitai.com/user/Rabbit_YourMajesty)
+.hover-hash:hover::before {
+  opacity: 1;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+</style>
+
+<h1 id="red-team" class="hover-hash">About me</h1>
+
+<script>
+document.querySelectorAll('.hover-hash').forEach(header => {
+  header.addEventListener('click', () => {
+    header.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
+    });
+  });
+});
+</script>
+
+```bash
+whoami
+scriptos0
+```
+
+**Hi!,** I am developing my skills in **penetration testing,** with a focus on discovering and exploiting **security vulnerabilities in web applications, networks, and systems.** My goal is to understand attack vectors and defense mechanisms through hands-on practice and continuous learning. I work with tools such as **Burp Suite, Nmap, Metasploit, and Wireshark,** following **OWASP** and **ethical hacking** methodologies. I’m passionate about offensive security, vulnerability assessment, and improving my technical knowledge to perform realistic and effective security testing.
+
+I created this site to share my **write-ups, notes, and experiences in cybersecurity** — from **CTF** challenges to **real-world pentesting** concepts. This is my space to document what I learn, improve my skills, and hopefully help others along the way.
+
+**From:** ![Argentina](/flags/Argentina.jpg)
