@@ -1,6 +1,6 @@
 ---
 title: TCP - UDP & Three-Way Handshake
-published: 2026-10-07
+published: 2026-07-10
 description: In this post, you'll learn how the TCP and UDP protocols work and how connections are established using the Three-Way Handshake. 
 image: ./networking.png
 tags: [Article, Networking]

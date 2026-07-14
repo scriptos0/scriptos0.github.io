@@ -1,6 +1,6 @@
 ---
 title: Nmap Cheatsheet
-published: 2025-24-07
+published: 2026-07-24
 description: Nmap Cheatsheet to help make your network scanning a whole lot easier. If you always forget the exact flags for OS detection or fast scans, this guide is for you. It’s straight to the point, easy to read, and perfect for your cybersecurity toolkit. 
 image: ./nmaplogo.png
 tags: [Linux, Nmap, Commands, Cheatsheet, Tools]
