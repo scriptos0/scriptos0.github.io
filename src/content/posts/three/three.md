@@ -1,7 +1,8 @@
 ---
+
 title: Three
 published: 2026-07-09
-description:  Three is a very easy Linux machine featuring a website using a misconfigured AWS S3 bucket as its cloud-storage device. The machine explores web application enumeration and subdomain fuzzing to detect the hidden domain corresponding to the S3 bucket. Then it showcases using the AWS command line interface to access the vulnerable S3 bucket as well as how to exploit it by uploading and triggering a reverse shell.
+description: Three is a very easy Linux machine featuring a website using a misconfigured AWS S3 bucket as its cloud-storage device. The machine explores web application enumeration and subdomain fuzzing to detect the hidden domain corresponding to the S3 bucket. Then it showcases using the AWS command line interface to access the vulnerable S3 bucket as well as how to exploit it by uploading and triggering a reverse shell.
 image: ./three-machine.png
 tags: [Linux, Very Easy, HackTheBox]
 category: writeups
@@ -49,7 +50,7 @@ First, let's take a quick look at the HTTP service
 
 # Brute-Force Attack
 
-Unfortunately, we couldn't find anything interesting, so we're going to perform a brute-force attack on directories using **Gobuster**.   (We added the -x flag because the web 
+Unfortunately, we couldn't find anything interesting, so we're going to perform a brute-force attack on directories using **Gobuster**. (We added the -x flag because the web
 service uses **PHP**)
 
 ```bash
@@ -108,7 +109,7 @@ Thanks to a Google search, we were able to find out **aws s3 bucket** is running
 
 Now let's see how to interact with this service remotely
 
-First of all, we'll install the tool in case we don't already have it 
+First of all, we'll install the tool in case we don't already have it
 
 ```bash
 sudo apt-get install awscli
@@ -170,7 +171,7 @@ Once the reverse shell is created, we'll set up a local HTTP server to host it
 python3 -m http.server 8000
 ```
 
-Next, we're going to open a listening port through which the shell will connect  **(Keep in mind that it must be the same port that we specified when creating the revshell)**
+Next, we're going to open a listening port through which the shell will connect **(Keep in mind that it must be the same port that we specified when creating the revshell)**
 
 ```bash
 nc -nvlp 1234

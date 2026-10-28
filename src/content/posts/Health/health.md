@@ -1,4 +1,5 @@
 ---
+
 title: Health
 published: 2026-07-22
 description: Health is a medium Linux machine that features an SSRF vulnerability on the main webpage that can be exploited to access services that are available only on localhost. More specifically, a Gogs instance is accessible only through localhost and this specific version is vulnerable to an SQL injection attack. Due to the way that an attacker can interact with the Gogs instance the best approach in this scenario is to replicate the remote environment by installing the same Gogs version on a local machine and then using automated tools to produce a valid payload. After retrieving the hashed password of the user susanne an attacker is able to crack the hash and reveal the plain text password of that user. The same credentials can be used to authenticate to the remote machine using SSH. Privilege escalation relies on cron jobs that are running under the user root. These cron jobs are related to the functionality of the main web application and process unfiltered data from a database. Thus, an attacker is able to inject a malicious task inside the database and exfiltrate the SSH key file of the user root, thus, allowing him to gain a root session on the remote machine.
@@ -61,7 +62,7 @@ If we take a closer look at the options this tool offers, we see that there are 
 
 **Interval** = This represents Cron Jobs, and it is the interval at which the request will be executed.
 
-To verify whether this tool actually works, we're going to set up a local `Python` web server and then use `netcat` to open a listening port to see 
+To verify whether this tool actually works, we're going to set up a local `Python` web server and then use `netcat` to open a listening port to see
 if we receive the information via a **POST** request
 
 ```bash
@@ -134,7 +135,7 @@ Now that we know this, let's try running a **PHP** server
 nvim index.php
 ```
 
-Now we're going to create a **PHP** file that redirects to localhost and points to the internal service on port 3000, and if the victim machine runs our code, 
+Now we're going to create a **PHP** file that redirects to localhost and points to the internal service on port 3000, and if the victim machine runs our code,
 we'll be able to see the internal service
 
 ```php
@@ -157,7 +158,7 @@ Now that the **PHP** server has been created and the listening port has been ope
 
 And as we can see, we received something...
 
-To view this information in plain text, we should first copy all the information and paste it into a file. 
+To view this information in plain text, we should first copy all the information and paste it into a file.
 Then, we should use the `jq` utility and filter using **.body** to extract the body of the message, and then use the **-r** flag to display it in raw format.
 
 ```bash
@@ -168,12 +169,12 @@ By doing this, we will extract the **HTML** in raw format from the service that 
 
 All that's left to do to view the service correctly on our machine is to copy all the **HTML** content we were able to extract and paste it into an **index.html** file
 
-And then set up an **HTTP** server to host the **.html** file containing the code we managed to extract, so we could view the content of the web page that was being 
+And then set up an **HTTP** server to host the **.html** file containing the code we managed to extract, so we could view the content of the web page that was being
 hosted locally on the victim's machine
 
 ![!gogspage](./GOGSpage.png)
 
-The next step would be to see if there is an exploit available for that service, in this case **Gogs v0.5.5** 
+The next step would be to see if there is an exploit available for that service, in this case **Gogs v0.5.5**
 
 ```bash
 searchsploit gogs
@@ -221,7 +222,7 @@ Then we run the **SQL query** provided by the exploit's **PoC**
 
 ![truerespond](./wereceivedtrue.png)
 
-And we received something, but it doesn't provide us with any important information, so we're going to create our own **SQL query** 
+And we received something, but it doesn't provide us with any important information, so we're going to create our own **SQL query**
 to extract data that will give us access to the victim's machine
 
 To create our own query, the first step would be to intercept the request using `Burp Suite`
@@ -316,7 +317,7 @@ To do that, let's take a look at what the project looked like before
 
 ![browsefiles](./browsefiles.png)
 
-Next, we'll go to the **models** section, *user.go**, and there we'll see what format the password has been hashed in
+Next, we'll go to the **models** section, _user.go_*, and there we'll see what format the password has been hashed in
 
 ![thisformat](./thisformat.png)
 
@@ -334,7 +335,7 @@ hashcat --example-hashes | grep -i "PBKDF2"
 
 ![hashcathashes](./hashcathashes.png)
 
-And this is the one we're interested in: "PBKDF2-HMAC-SHA256" 
+And this is the one we're interested in: "PBKDF2-HMAC-SHA256"
 
 Then we performed a more specific search to find the **Hash Mode** and **Example.Hash**
 
@@ -350,7 +351,7 @@ To do this, we're going to create a file to store Example.Hash and the salt/hash
 
 ![likethisss](./likethisss.png)
 
-Since we need it to be in **Base64** to crack it, we'll provide the hash and salt as specified in **Example.Hash**, except that we'll 
+Since we need it to be in **Base64** to crack it, we'll provide the hash and salt as specified in **Example.Hash**, except that we'll
 convert both the **salt** and the **SHA-256 hash** to **Base64**
 
 First, let's start with the hash
@@ -371,7 +372,7 @@ The only value we need to change is **1,000** to **10,000**, since 10,000 is the
 
 ![hash_to_crack](./hash_to_crack.png)
 
-Now that we have this hash, we're going to crack it on our main operating system using hashcat 
+Now that we have this hash, we're going to crack it on our main operating system using hashcat
 **(it's best to use our main operating system to crack passwords since hashcat uses a lot of hardware)**
 
 Copy and paste the hash into **Notepad**, then install **Hashcat** & **rockyou.txt** for your operating system, **open a terminal**, and run:
@@ -382,14 +383,14 @@ Copy and paste the hash into **Notepad**, then install **Hashcat** & **rockyou.t
 
 Once the password has been cracked, it will display the hash followed by an “=” and the password in plain text
 
-At this point, we have everything we need to attempt to gain access to the victim machine by combining **SSRF** with **SQL injection**. 
+At this point, we have everything we need to attempt to gain access to the victim machine by combining **SSRF** with **SQL injection**.
 We will then crack the password on the actual service and use any remote services available to us to connect using the cracked credentials
 
 So, let's modify the **PHP** file with the **SQL query** we created locally using `Burp Suite`
 
 ![finalsqlquery](./finalsqlquery.png)
 
-Then, just as we did before, we opened a listening port using `netcat` and also set up a **PHP** server where our code will run, redirecting to internal 
+Then, just as we did before, we opened a listening port using `netcat` and also set up a **PHP** server where our code will run, redirecting to internal
 port 3000 on the victim machine with the **SQL query** we created
 
 ![finalrequest](./finalrequest.png)
@@ -483,7 +484,7 @@ chmod +x pseo.sh
 
 ![phpartisan](./phpartisan.png)
 
-Taking a look at the output of the script we ran, we see that the root user is running `artisan` with **PHP**, but since we don't know what it 
+Taking a look at the output of the script we ran, we see that the root user is running `artisan` with **PHP**, but since we don't know what it
 does or what it is, let's take a closer look
 
 ```bash
@@ -516,8 +517,8 @@ cat Kernel.php | less -S
 
 This is the key part of the code:
 
-/*  Run your task here */
-                HealthChecker::check($task->webhookUrl, $task->monitoredUrl, $task->onlyError);
+/* Run your task here */
+HealthChecker::check($task->webhookUrl, $task->monitoredUrl, $task->onlyError);
 
 
 Let's find out what **“check”** does
@@ -579,14 +580,14 @@ update tasks set monitoredUrl = 'file:///root/.ssh/id_rsa';
 ![updatingtaskstabletoelevateprivileges](./updatingtasktabletoelevateprivileges.png)
 
 So, we open a listening port, then create a webhook and modify the query so that when it runs every minute as we specified with * * * * *,
-it will execute whatever we’ve specified, in this case listing the contents of the root user’s id_rsa file. All this information will be sent to the port 
+it will execute whatever we’ve specified, in this case listing the contents of the root user’s id_rsa file. All this information will be sent to the port
 we’re listening on with netcat, allowing us to elevate our privileges to root
 
 ![sshrootkeyreceived](./sshrootkeyreceived.png)
 
 And here we received the **root** user's **id_rsa**, now we'll copy it and save it to a file
 
-Then, using `jq`, we convert it to raw format so that the key is properly structured, and finally, we save the file containing 
+Then, using `jq`, we convert it to raw format so that the key is properly structured, and finally, we save the file containing
 the key to a file named **id_rsa**, to which we must assign **600 permissions** for it to work correctly
 
 ```bash

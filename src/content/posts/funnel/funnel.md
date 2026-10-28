@@ -1,4 +1,5 @@
 ---
+
 title: Funnel
 published: 2026-07-10
 description: Funnel is a very easy Linux machine that explores SSH tunneling techniques. The machine features a misconfigured FTP server that allows anonymous authentication, in which a file containing cleartext credentials can be found. Hydra is then used to perform a password spray and get remote access. Upon enumerating the services running locally on the machine, PostgreSQL can be exploited by leveraging port-forwarding.

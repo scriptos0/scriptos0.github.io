@@ -1,7 +1,8 @@
 ---
+
 title: Nmap Cheatsheet
 published: 2026-07-13
-description: Nmap Cheatsheet to help make your network scanning a whole lot easier. If you always forget the exact flags for OS detection or fast scans, this guide is for you. It’s straight to the point, easy to read, and perfect for your cybersecurity toolkit. 
+description: Nmap Cheatsheet to help make your network scanning a whole lot easier. If you always forget the exact flags for OS detection or fast scans, this guide is for you. It’s straight to the point, easy to read, and perfect for your cybersecurity toolkit.
 image: ./nmaplogo.png
 tags: [Linux, Nmap, Commands, Cheatsheet, Tools]
 category: Cheatsheet
@@ -50,7 +51,7 @@ TCP Port Scan
 nmap -sS -p- --open --min-rate 5000 <IP> -vvv -n -Pn -oG TCPports.txt
 ```
 
-UDP Port Scan   **(Optional)**
+UDP Port Scan **(Optional)**
 
 ```bash
 nmap -sU -p- --open --min-rate 500 <IP> -vvv -n -Pn -oG UDPports.txt
@@ -62,7 +63,7 @@ Extract TCP Ports
 grep '^[0-9]' TCPports.txt | cut -d '/' -f 1 | xargs | sort -u | tr ' ' ','
 ```
 
-Extract UDP Ports   **(Optional)**
+Extract UDP Ports **(Optional)**
 
 ```bash
 grep '^[0-9]' UDPports.txt | cut -d '/' -f 1 | xargs | sort -u | tr ' ' ','
@@ -97,8 +98,3 @@ It's important to note that there are thousands of ways to bypass firewalls. Bel
 **Stealth Scan (-sS):** This technique is one of the most commonly used methods for performing stealth scans and avoiding detection by the firewall. The -sS command allows users to perform a SYN scan without establishing a full connection, thereby avoiding detection by the firewall.
 
 **min-rate (--min-rate):** This technique allows the user to control the speed to the packets that are sent to avoid detection by the firewall.
-
-
-
-
-

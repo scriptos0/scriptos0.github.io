@@ -1,4 +1,5 @@
 ---
+
 title: Scrambled
 published: 2026-08-10
 description: Scrambled is a medium Windows Active Directory machine that requires a technical chain of exploitation starting with initial web enumeration to acquire credentials for the user ksimpson under a strict environment where NTLM authentication is disabled in favor of Kerberos. Using these credentials to access public SMB shares uncovers intelligence regarding an internal SQL service. Active Directory enumeration reveals that the SqlSvc account has a registered Service Principal Name (SPN), enabling a Kerberoasting attack to harvest and crack its service ticket hash. With the SqlSvc credentials obtained, an attacker performs a Silver Ticket attack to forge a valid Kerberos ticket and impersonate the Administrator user against the remote MSSQL instance. Querying the database exposes credentials for the MiscSvc account, which are used to gain initial code execution on the host via PowerShell Remoting. Further internal enumeration reveals a custom .NET application listening on port 4411. Reverse engineering this application exposes the use of the insecure BinaryFormatter serialization class, which is leveraged to upload a malicious payload and achieve final privilege escalation to NT AUTHORITY\SYSTEM through insecure deserialization.
@@ -214,8 +215,8 @@ And as we can see, the user is valid
 
 # Brute-Force Attack
 
-Since we can't do much with just the username, we're going to perform a **brute-force attack** on usernames using `kerbrute`. If we have multiple users, 
-we can attempt an **AS-REP Roast Attack**     
+Since we can't do much with just the username, we're going to perform a **brute-force attack** on usernames using `kerbrute`. If we have multiple users,
+we can attempt an **AS-REP Roast Attack**
 
 (Wordlist that we used ---> https://github.com/attackdebris/kerberos_enum_userlists)
 
@@ -249,7 +250,7 @@ What comes to mind right now is to use `Kerbrute` again to try to identify valid
 
 we're going to perform another **brute-force attack**, but in this case to obtain valid user passwords
 
-Before launching a large-scale attack, it's best to first test it manually by entering usernames as passwords, in some cases this works because users set their username as 
+Before launching a large-scale attack, it's best to first test it manually by entering usernames as passwords, in some cases this works because users set their username as
 a password
 
 Let's start with the first user we found, **“ksimpson”**
@@ -266,9 +267,9 @@ It looks like the user ksimpson is using the username as a password! (This is a 
 
 After testing the following users, only the user ksimpson works
 
-Now that we have credentials, we can carry out a **Kerberoasting attack** 
+Now that we have credentials, we can carry out a **Kerberoasting attack**
 
-But before we try that, let's connect via **SMB** using the impacket `smbclient.py`   (Let's not forget to use the -k flag for Kerberos authentication)
+But before we try that, let's connect via **SMB** using the impacket `smbclient.py` (Let's not forget to use the -k flag for Kerberos authentication)
 
 # Successful SMB connection
 
@@ -307,7 +308,7 @@ But we couldn't find anything we didn't already know
 
 So let's move on to the **Kerberoasting Attack** phase
 
-To perform this attack, we'll use the impacket `GetUserSNPs.py`  (and of course we're going to use the only credentials we have)
+To perform this attack, we'll use the impacket `GetUserSNPs.py` (and of course we're going to use the only credentials we have)
 
 # Kerberoasting Attack
 
@@ -317,7 +318,7 @@ GetUserSPNs.py -k scrm.local/ksimpson:ksimpson -dc-host DC1.scrm.local -request
 
 ![TGS](./kerberoastingattack.png)
 
-The attack was successful, and we were able to obtain the **TGS** (Ticket Granting Service) for the user **"sqlsvc"** which has a **SPN** (Service Principal Name) associated 
+The attack was successful, and we were able to obtain the **TGS** (Ticket Granting Service) for the user **"sqlsvc"** which has a **SPN** (Service Principal Name) associated
 with it
 
 Now let's save the **hash** to a file
@@ -356,7 +357,7 @@ But we haven't been able to connect successfully
 
 But we still have another method: the **Silver Ticket Attack**
 
-To carry out this attack, we must have a user account associated with an SPN, that user's password in NTLM hash format, and finally the Domain SID of the user we want 
+To carry out this attack, we must have a user account associated with an SPN, that user's password in NTLM hash format, and finally the Domain SID of the user we want
 to impersonate
 
 # Obtaining the SID, SPN and NTLM Hash
@@ -394,7 +395,7 @@ ticketer.py -spn MSSQLSvc/dc1.scrm.local -domain-sid S-1-5-21-2743207045-1827831
 
 ![successfulattack](./successfulattack.png)
 
-Now we need to export the **KBR5CCNAME** environment variable so that its value is the file where the **TGS** was generated 
+Now we need to export the **KBR5CCNAME** environment variable so that its value is the file where the **TGS** was generated
 (We need this to authenticate with **Kerberos** using **tickets**)
 
 ```bash
@@ -461,16 +462,3 @@ get ScrambleLib.dll
 ```
 
     **At this point, we would need to set up a Python server to transfer these two files to a Windows machine and then elevate privileges from the Windows machine**
-
-
-
-
-
-
-
-
-
-
-
-
-

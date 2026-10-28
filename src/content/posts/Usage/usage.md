@@ -1,7 +1,8 @@
 ---
+
 title: Usage
 published: 2026-10-25
-description: Usage is an easy Linux machine that features a blog site vulnerable to SQL injection, which allows the administrator’s hashed password to be dumped and cracked. This leads to access to the admin panel, where an outdated Laravel module is abused to upload a PHP web shell and obtain remote code execution. On the machine, plaintext credentials stored in a file allow SSH access as another user, who can run a custom binary as root. The tool makes an insecure call to 7zip, which is leveraged to read the root user’s private SSH key and fully compromise the system. 
+description: Usage is an easy Linux machine that features a blog site vulnerable to SQL injection, which allows the administrator’s hashed password to be dumped and cracked. This leads to access to the admin panel, where an outdated Laravel module is abused to upload a PHP web shell and obtain remote code execution. On the machine, plaintext credentials stored in a file allow SSH access as another user, who can run a custom binary as root. The tool makes an insecure call to 7zip, which is leveraged to read the root user’s private SSH key and fully compromise the system.
 image: ./usage_logo.png
 tags: [Linux, Easy, HackTheBox]
 category: writeups
@@ -230,7 +231,7 @@ Now all we have to do is copy and paste the hash so the page will tell us what t
 
 ![hashtype](./hashtype.png)
 
-And we see an interesting message: **"Possible algorithms: bcrypt $2*$, Blowfish (Unix)"**
+And we see an interesting message: _*"Possible algorithms: bcrypt $2*$, Blowfish (Unix)"_*
 
 To crack this hash, we're going to use `Hashcat`, but first we need to find the ID number for this type of hash
 

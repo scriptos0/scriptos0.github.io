@@ -1,7 +1,8 @@
 ---
+
 title: TCP - UDP & Three-Way Handshake
 published: 2026-07-10
-description: In this post, you'll learn how the TCP and UDP protocols work and how connections are established using the Three-Way Handshake. 
+description: In this post, you'll learn how the TCP and UDP protocols work and how connections are established using the Three-Way Handshake.
 image: ./networking.png
 tags: [Article, Networking]
 category: Technical Article
@@ -35,13 +36,13 @@ On the other hand, there's **UDP (User Datagram Protocol)**. Its top priority is
 # Common UDP Ports:
 
 53: **DNS (Domain Name System)** — a system that translates domain names into IP addresses.
-    
+
 67/68: **DHCP (Dynamic Host Configuration Protocol)** — a protocol used to assign IP addresses and other configuration parameters to devices on a network.
-    
+
 69: **TFTP (Trivial File Transfer Protocol)** — a simple protocol used to transfer files between devices on a network.
-    
+
 123: **NTP (Network Time Protocol)** — a protocol used to synchronize the clocks of devices on a network.
-    
+
 161: **SNMP (Simple Network Management Protocol)** — a protocol used to manage and monitor devices on a network.
 
 It should be noted that these are just some of the most common ones. There are many more ports that operate over both **TCP** and **UDP**
@@ -71,7 +72,7 @@ To do this, it sends a packet with two active flags: SYN (1) and ACK (1)
 
 **Server State:** Changes to SYN-RECEIVED
 
-**STEP 3** The Client confirms the agreement **(ACK)** 
+**STEP 3** The Client confirms the agreement **(ACK)**
 
 The client receives the SYN-ACK from the server. Now the client knows that the server hears it well. The last step is to confirm that it also hears the server well.
 It sends a final packet with the ACK flag active (1)
