@@ -1,5 +1,4 @@
 ---
-
 title: Usage
 published: 2026-10-25
 description: Usage is an easy Linux machine that features a blog site vulnerable to SQL injection, which allows the administrator’s hashed password to be dumped and cracked. This leads to access to the admin panel, where an outdated Laravel module is abused to upload a PHP web shell and obtain remote code execution. On the machine, plaintext credentials stored in a file allow SSH access as another user, who can run a custom binary as root. The tool makes an insecure call to 7zip, which is leveraged to read the root user’s private SSH key and fully compromise the system.

