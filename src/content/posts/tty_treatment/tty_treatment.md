@@ -1,4 +1,5 @@
 ---
+
 title: TTY Treatment
 published: 2026-10-30
 description: When you get a reverse shell during a pentest or a CTF, the shell you receive is usually very limited. It is not a real terminal, just a raw stream of input and output over a socket. This is where the TTY treatment comes in, the process of upgrading that basic shell into a fully interactive one.
@@ -76,7 +77,7 @@ script /dev/null -c bash
 
 **-c bash** tells it which program to run inside that PTY — bash in this case
 
-*Result:* instead of a raw socket shell, you now have a shell running inside a proper PTY, which supports job control, signals, and terminal features.
+_Result:_ instead of a raw socket shell, you now have a shell running inside a proper PTY, which supports job control, signals, and terminal features.
 
 For a zsh target, this becomes script /dev/null -c zsh, as long as zsh is actually installed on that machine (check first with which zsh or cat /etc/shells).
 
@@ -130,10 +131,10 @@ Run this on the target, using the numbers from the previous command. This tells 
 
 # Bash vs Zsh — What Actually Differs
 
-| Part | Bash | zsh |
-|---|---|---|
-| Spawning the PTY | `script /dev/null -c bash` | `script /dev/null -c zsh` |
-| `SHELL` variable | `export SHELL=bash` | `export SHELL=zsh` |
-| Job control (`Ctrl+Z`, `fg`) | works | works |
-| `stty` commands | works | works |
-| Availability on targets | almost always present | rarely installed |
+| Part                         | Bash                       | zsh                       |
+| ---------------------------- | -------------------------- | ------------------------- |
+| Spawning the PTY             | `script /dev/null -c bash` | `script /dev/null -c zsh` |
+| `SHELL` variable             | `export SHELL=bash`        | `export SHELL=zsh`        |
+| Job control (`Ctrl+Z`, `fg`) | works                      | works                     |
+| `stty` commands              | works                      | works                     |
+| Availability on targets      | almost always present      | rarely installed          |
