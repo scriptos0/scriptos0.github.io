@@ -37,7 +37,7 @@ document.querySelectorAll('.hover-hash').forEach(header => {
 
 ```bash
 whoami
-scriptos0
+escalofrio
 ```
 
 **Hi!,** I am developing my skills in **penetration testing,** with a focus on discovering and exploiting **security vulnerabilities in web applications, networks, and systems.** My goal is to understand attack vectors and defense mechanisms through hands-on practice and continuous learning. I work with tools such as **Burp Suite, Nmap, Metasploit, and Wireshark,** following **OWASP** and **ethical hacking** methodologies. I’m passionate about offensive security, vulnerability assessment, and improving my technical knowledge to perform realistic and effective security testing.

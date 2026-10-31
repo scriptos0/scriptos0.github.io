@@ -67,7 +67,7 @@ export const profileConfig: ProfileConfig = {
 		{
 			name: "monkeytype",
 			icon: "simple-icons:monkeytype",
-			url: "https://monkeytype.com/profile/scriptos0",
+			url: "https://monkeytype.com/profile/escalofrio",
 		},
 		{
 			name: "GitHub",
